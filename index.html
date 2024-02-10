@@ -33,30 +33,47 @@
 	</div>
 	
 	<script>
-		// refactor function validate
-		function temperatureConversion(t, u) {
-			var t1, u1;
+		// refactor function calculate
+		function calculate(t, u) {
+			var t1;
 			if (u === "F") {
 				t1 = t * (9/5) + 32;
-				u1 = "Fahrenheit";
 			} else if (u === "K") {
 				t1 = t + 273.15;
-				u1 = "Kelvin";
 			} else if (u === "R") {
 				t1 = t * (4/5);
-				u1 = "Réaumur";
 			} else {
 				alert("Invalid unit specified.");
 				return null;
 			}
+			return t1;
+		}
+	
+		// refactor function validate
+		function validate(t, u) {
+			var t1 = calculate(t, u);
+			if (t1 === null) {
+				return null;
+			}
+	
+			var u1;
+			if (u === "F") {
+				u1 = "Fahrenheit";
+			} else if (u === "K") {
+				u1 = "Kelvin";
+			} else if (u === "R") {
+				u1 = "Réaumur";
+			}
+	
 			return { t1: t1, u1: u1 };
 		}
-	    $(document).ready(function(){
+	
+		$(document).ready(function(){
 			$("button").click(function(){
 				var t = parseFloat($('#temp').val());
 				var u = $('#unit').val();
 	
-				var result = temperatureConversion(t, u);
+				var result = validate(t, u);
 				if (result === null) {
 					return;
 				}
